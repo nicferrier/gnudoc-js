@@ -1,0 +1,17 @@
+{
+  "name": "gnudoc",
+  "version": "0.0.1",
+  "description": "A js enabled doc system",
+  "keywords": ["doc"],
+  "homepage": "",
+  "license": "GPL-3.0+",
+  "author": {
+    "name": "Nic Ferrier",
+    "email": "nic@ferrier.me.uk",
+    "url": "http://nic.ferrier.me.uk"
+  },
+  "dependencies": {
+    "jquery-browserify": "1.8.1",
+    "browserify": ">=4.2.0"
+  }
+}
