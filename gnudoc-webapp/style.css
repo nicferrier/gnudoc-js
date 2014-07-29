@@ -2,6 +2,14 @@ body {
     font-family: sans-serif;
 }
 
+.hidden {
+    display: none;
+}
+
+.doc {
+    border-bottom: thin solid;
+}
+
 div#index {
     display: none;
 }

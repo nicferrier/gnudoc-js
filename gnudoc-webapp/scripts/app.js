@@ -1,25 +1,46 @@
 var util = require("util");
 var $ = require("jquery-browserify");
+var clickHistory = [];
 
+function docGet (target) {
+  var resource = util.format("/manual/elisp/%s", target);
+  $.ajax(resource, {
+    dataType: "html",
+    error: function () {
+      alert(util.format("something went wrong getting %s", resource));
+    },
+    success: function (data) { 
+      var newData = data.replace(
+        "<body>", "<body><div class=\"doc\" id=\"body\">"
+      ).replace(
+        '</body>','</div></body>'
+      );
+      var body = $("<div class=\"display: none;\"></div>").html(newData).find("#body");
+      $("#contents").addClass("hidden");
+      $("#viewer").removeClass("hidden");
+      $("#viewer").empty().html(body);
+      clickHistory.push(target);
+      aReplace("#viewer a");
+    }
+  });
+}
 
 function docClick (evt) {
-  var target = $(evt.target).attr("ref");
-  console.log(util.format("viewer %s", target));
-  $("#viewer").load(
-    "/manual/elisp/" + target, 
-    function () { aReplace("#viewer a");});
+  var target = $(evt.target).attr("ref").split(" ");
+  docGet(target[0]);
   return false;
 }
 
 // replace all the A hrefs in a section
 function aReplace (selector) {
+  console.log(util.format("aReplace called on %s", selector));
   $(selector).each(function (i, e) {
     var el = $(e);
     var href = el.attr("href");
     el.attr("href", "#");
     el.attr("ref", href);
-    $(selector).click(function (evt) { docClick (evt); });
   });
+  $(selector).click(function (evt) { return docClick (evt); });
 }
 
 $("#index").load(
@@ -49,6 +70,28 @@ $("#index").load(
     );
 
     aReplace("ul#contents li a");
+
+    // Some basic "info" mode key handling
+    $("body").keypress(function (evt){
+      console.log("got a keypress! ", String.fromCharCode(evt.which));
+      var keyStr = String.fromCharCode(evt.which);
+      if (keyStr == "<") {
+        $("#contents").removeClass("hidden");
+        $("#viewer").addClass("hidden");
+      }
+      else if (keyStr == "b") {
+        clickHistory.pop();
+        var resource = clickHistory.pop();
+        if (resource == null) {
+          $("#contents").removeClass("hidden");
+          $("#viewer").addClass("hidden");
+        }
+        else {
+          console.log("back! to ", resource);
+          docGet(resource);
+        }
+      }
+    });
   });
 
 // app.js ends here
