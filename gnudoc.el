@@ -2,7 +2,7 @@
 
 (require 'elnode-proxy)
 
-(defconst gnudoc/docroot (expand-file-name "docroot"))
+(defconst gnudoc/docroot (expand-file-name "gnudoc-webapp"))
 
 (defun gnudoc-ws (httpcon)
   (let ((elnode-send-file-assoc
