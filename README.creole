@@ -25,3 +25,17 @@ together).
 
 Elnode could easily be replaced by other technologies here. I'm using
 it because it's easy for me.
+
+
+=== how to ===
+
+Dependencies:
+
+* emacs 24.3
+* elnode for emacs 0.9.9.8.1
+* clone
+* npm install .
+* start the elnode app in an Emacs
+** use latest elnode 0.9.9.8.1
+* hit http://localhost:elnode-port
+** whatever you set the port to when you started elnode for the app
