@@ -29,10 +29,13 @@ it because it's easy for me.
 
 === how to ===
 
+Install:-
+
 Dependencies:
 
 * emacs 24.3
 * elnode for emacs 0.9.9.8.1
+
 * clone
 * npm install .
 * start the elnode app in an Emacs
