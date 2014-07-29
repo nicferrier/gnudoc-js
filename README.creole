@@ -1,0 +1,27 @@
+= a GNU doc viewer =
+
+This is an example GNU doc viewer as a //single page// javascript app.
+
+That means it's a webapp, you use a modern HTML5 browser to view
+it. The context changes you see while using it are not browser page
+changes, they are DOM manipulations achieved through AJAX events.
+
+The app is designed to show how a complex info reader could be made
+with very little control over the HTML.
+
+The HTML here is pulled from the GNU website. It's only the emacs
+manual but that's just to simplify things slightly. Mostly it would
+not be difficult to make an info reader for all GNU documents. It
+would just require a bit of code mapping them together.
+
+
+=== the role of elnode ===
+
+Elnode is here because it's easy to make do lots of different
+things. In this app it's proxying the GNU website to send Emacs info
+manual nodes to our JS and it's browserifying the JavaScript
+(browserify is a particular way of combining JavaScript files
+together).
+
+Elnode could easily be replaced by other technologies here. I'm using
+it because it's easy for me.
