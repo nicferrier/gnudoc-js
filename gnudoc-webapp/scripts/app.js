@@ -2,6 +2,17 @@ var util = require("util");
 var $ = require("jquery-browserify");
 var clickHistory = [];
 
+$(window).on("popstate", function (){
+  var target = document.location.pathname;
+  if (target == "/") {
+    $("#viewer").addClass("hidden");
+    $("#contents").removeClass("hidden");
+  }
+  else {
+    docGet (target);
+  }
+});
+
 function docGet (target) {
   var resource = util.format("/manual/elisp/%s", target);
   $.ajax(resource, {
@@ -27,6 +38,7 @@ function docGet (target) {
 
 function docClick (evt) {
   var target = $(evt.target).attr("ref").split(" ");
+  history.pushState({}, "", target);
   docGet(target[0]);
   return false;
 }
