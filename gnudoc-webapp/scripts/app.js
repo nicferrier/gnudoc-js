@@ -87,23 +87,18 @@ $("#index").load(
     $("body").keypress(function (evt){
       console.log("got a keypress! ", String.fromCharCode(evt.which));
       var keyStr = String.fromCharCode(evt.which);
-      if (keyStr == "<") {
-        // FIXME: We should probably do this with history hacking
-        $("#contents").removeClass("hidden");
-        $("#viewer").addClass("hidden");
+      if (keyStr == "<" || keyStr == "T") {
+        document.location.href = "/";
+        /*
+         $("#contents").removeClass("hidden");
+         $("#viewer").addClass("hidden");
+         */
       }
-      else if (keyStr == "b") {
-        // FIXME: We should probably do this with history hacking
-        clickHistory.pop();
-        var resource = clickHistory.pop();
-        if (resource == null) {
-          $("#contents").removeClass("hidden");
-          $("#viewer").addClass("hidden");
-        }
-        else {
-          console.log("back! to ", resource);
-          docGet(resource);
-        }
+      else if (keyStr == "l") {
+        window.history.go(-1); //.pop();
+      }
+      else if (keyStr == "f") {
+        window.history.go(1);
       }
     });
   });
