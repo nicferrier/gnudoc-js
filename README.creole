@@ -33,12 +33,16 @@ Dependencies:
 
 * emacs 24.3
 * elnode for emacs 0.9.9.8.1
+* nodejs and npm
 
 Install:-
 
-* clone
+* clone the repo
 * npm install .
 * start the elnode app in an Emacs
 ** use latest elnode 0.9.9.8.1
 * hit http://localhost:elnode-port
 ** whatever you set the port to when you started elnode for the app
+
+
+I'll make a Docker for this and run it on a host somewhere.
