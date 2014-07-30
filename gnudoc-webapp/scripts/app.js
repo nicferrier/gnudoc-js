@@ -88,11 +88,8 @@ $("#index").load(
       console.log("got a keypress! ", String.fromCharCode(evt.which));
       var keyStr = String.fromCharCode(evt.which);
       if (keyStr == "<" || keyStr == "T") {
+        // FIXME - not ideal, it reloads
         document.location.href = "/";
-        /*
-         $("#contents").removeClass("hidden");
-         $("#viewer").addClass("hidden");
-         */
       }
       else if (keyStr == "l") {
         window.history.go(-1); //.pop();
