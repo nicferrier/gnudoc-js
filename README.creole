@@ -51,4 +51,10 @@ Install:-
 ** whatever you set the port to when you started elnode for the app
 
 
-I'll make a Docker for this and run it on a host somewhere.
+=== Docker ===
+
+There's a Dockerfile included. The build seems to work ok. If you want
+to work on it yourself maybe use that.
+
+
+
