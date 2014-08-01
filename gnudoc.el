@@ -1,6 +1,7 @@
 
 
 (require 'elnode-proxy)
+(require 'elnode-js)
 
 (defconst gnudoc/docroot (expand-file-name "gnudoc-webapp"))
 
