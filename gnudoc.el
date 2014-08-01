@@ -27,5 +27,11 @@
    `(("^[^/]+//manual/.*" . gnudoc-prox)
      ("^[^.]+//.*" . gnudoc-ws))))
 
-(elnode-start 'gnudoc-handler :port 8015)
+(elnode-start
+ 'gnudoc-handler
+ :port 8015
+ ;; setting the host specifically although elnode should really use a
+ ;; default of elnode-init-host
+ :host "0.0.0.0") 
 
+;;; gnudoc.el ends here
