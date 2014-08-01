@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "A js enabled doc system",
   "keywords": ["doc"],
-  "homepage": "",
+  "repository": "https://github.com/nicferrier/gnudoc-js.git",
+  "homepage": "https://github.com/nicferrier/gnudoc-js",
   "license": "GPL-3.0+",
   "author": {
     "name": "Nic Ferrier",
