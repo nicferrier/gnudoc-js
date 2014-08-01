@@ -14,6 +14,12 @@ manual but that's just to simplify things slightly. Mostly it would
 not be difficult to make an info reader for all GNU documents. It
 would just require a bit of code mapping them together.
 
+=== Can I see it? ===
+
+Sure!
+
+Visit: [[http://gnudoc.ferrier.me.uk/]]
+
 
 === the role of elnode ===
 
