@@ -16,6 +16,8 @@ would just require a bit of code mapping them together.
 
 === Can I see it? ===
 
+{{http://nic.ferrier.me.uk/stuff/img/screenshot-of-gnudoc-2014-08-02.png?width=300}}
+
 Sure!
 
 Visit: [[http://gnudoc.ferrier.me.uk/]]
