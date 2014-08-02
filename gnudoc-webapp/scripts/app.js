@@ -1,5 +1,5 @@
 var util = require("util");
-var $ = require("jquery-browserify");
+var $ = require("jquery");
 var clickHistory = [];
 
 var commands = {
@@ -50,7 +50,7 @@ function docGet (infoTarget) {
     error: function () {
       alert(util.format("something went wrong getting %s", resource));
     },
-    success: function (data) { 
+    success: function (data) {
       var newData = data.replace(
         "<body>", "<body><div class=\"doc\" id=\"body\">"
       ).replace(
@@ -95,13 +95,13 @@ function keyDispatch (evt) {
 }
 
 $("#index").load(
-  "/manual/elisp/index.html #content", 
+  "/manual/elisp/index.html #content",
   function () {
     console.log("content is loaded!");
     var docTables = $("#index table");
     // If we use the tr we could possibly get the 2nd TD, a long description
     var hrefs = $("tr", docTables.get(0)).map(
-      function (i, e) { 
+      function (i, e) {
         var a = $("a", e);
         return { "href": a.attr("href"), "text": a.text() };
       }
