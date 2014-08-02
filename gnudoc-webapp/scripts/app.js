@@ -2,6 +2,12 @@ var util = require("util");
 var $ = require("jquery-browserify");
 var clickHistory = [];
 
+$(document).ready(function (){
+  if (document.location.pathname.indexOf("/info/") == 0) {
+    docGet(document.location.pathname.split("/info/")[1]);
+  }
+});
+
 $(window).on("popstate", function (){
   var target = document.location.pathname;
   if (target == "/") {

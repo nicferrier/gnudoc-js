@@ -11,6 +11,10 @@
     (elnode--webserver-handler-proc
      httpcon gnudoc/docroot elnode-webserver-extra-mimetypes)))
 
+(defun gnudoc-info (httpcon)
+  "Just send the main app page."
+  (elnode-send-file httpcon (expand-file-name "index.html" gnudoc/docroot)))
+
 (defun gnudoc-prox (httpcon)
   (let ((url
          (format
@@ -26,6 +30,7 @@
   (elnode-hostpath-dispatcher
    httpcon
    `(("^[^/]+//manual/.*" . gnudoc-prox)
+     ("^[^/]+//info/.*" . gnudoc-info)
      ("^[^.]+//.*" . gnudoc-ws))))
 
 (elnode-start
