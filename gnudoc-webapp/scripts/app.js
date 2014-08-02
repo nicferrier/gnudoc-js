@@ -40,32 +40,39 @@ $(window).on("popstate", function (){
 
 function docGet (infoTarget) {
   console.log("docGet: infoTarget = ", infoTarget);
-  var target = infoTarget.split("/info/")[1];
-  console.log("docGet: target = ", target);
-  var resource = util.format("/manual/elisp/%s", target);
-  $.ajax(resource, {
-    dataType: "html",
-    error: function () {
-      alert(util.format("something went wrong getting %s", resource));
-    },
-    success: function (data) {
-      var newData = data.replace(
-        "<body>", "<body><div class=\"doc\" id=\"body\">"
-      ).replace(
-        '</body>','</div></body>'
-      );
-      var body = $("<div class=\"display: none;\"></div>").html(newData).find("#body");
-      $("#contents").addClass("hidden");
-      $("#viewer").removeClass("hidden");
-      $("#viewer").empty().html(body);
-      clickHistory.push(target);
-      aReplace("#viewer a");
-    }
-  });
+  var target = infoTarget.split("/info/")[1] || "/";
+  if (target == "/") {
+    $("#viewer").addClass("hidden");
+    $("#contents").removeClass("hidden");
+    clickHistory.push(target);
+  }
+  else {
+    console.log("docGet: target = ", target);
+    var resource = util.format("/manual/elisp/%s", target);
+    $.ajax(resource, {
+      dataType: "html",
+      error: function () {
+        alert(util.format("something went wrong getting %s", resource));
+      },
+      success: function (data) {
+        var newData = data.replace(
+          "<body>", "<body><div class=\"doc\" id=\"body\">"
+        ).replace(
+          '</body>','</div></body>'
+        );
+        var body = $("<div class=\"display: none;\"></div>").html(newData).find("#body");
+        $("#contents").addClass("hidden");
+        $("#viewer").empty().html(body);
+        $("#viewer").removeClass("hidden");
+        clickHistory.push(target);
+        aReplace("#viewer a");
+      }
+    });
+  }
 }
 
 function docClick (evt) {
-  var target = $(evt.target).attr("ref").split(" ");
+  var target = $(evt.target).attr("href").split(" ");
   history.pushState({}, "", target);
   docGet(target[0]);
   return false;
@@ -77,8 +84,14 @@ function aReplace (selector) {
   $(selector).each(function (i, e) {
     var el = $(e);
     var href = el.attr("href");
-    el.attr("href", "#");
-    el.attr("ref", "/info/" + href);
+    if (href != null) {
+      if (href.match(/#Top/) != null) {
+        el.attr("href", "/");
+      }
+      else {
+        el.attr("href", "/info/" + href);
+      }
+    }
   });
   $(selector).click(function (evt) { return docClick (evt); });
 }
