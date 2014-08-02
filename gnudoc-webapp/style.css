@@ -1,3 +1,7 @@
+.hidden {
+    display: none;
+}
+
 html, body {
     font-family: sans-serif;
     margin: 0;
@@ -15,8 +19,16 @@ html, body {
   height: 11em;
 }
 
-.hidden {
-    display: none;
+h1 {
+    color:#224444;
+}
+
+#wrapper a:link {
+    color:#336666;
+}
+
+#wrapper a:visited {
+    color:#224444;
 }
 
 .doc {
