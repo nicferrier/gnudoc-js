@@ -36,7 +36,7 @@ h1 {
     border-bottom: thin solid;
 }
 
-div#index {
+div#tocHidden {
     display: none;
 }
 

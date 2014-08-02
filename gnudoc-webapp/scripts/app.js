@@ -105,11 +105,12 @@ function keyDispatch (evt) {
   }
 }
 
-$("#index").load(
+// Load the TOC into a hidden DOM node for manipulation
+$("#tocHidden").load(
   "/manual/elisp/index.html #content",
   function () {
     console.log("content is loaded!");
-    var docTables = $("#index table");
+    var docTables = $("#tocHidden table");
     // If we use the tr we could possibly get the 2nd TD, a long description
     var hrefs = $("tr", docTables.get(0)).map(
       function (i, e) {
