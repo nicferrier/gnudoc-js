@@ -1,12 +1,18 @@
-body {
+html, body {
     font-family: sans-serif;
     margin: 0;
-    overflow-y: scroll;
+    height: 100%;
 }
 
 #wrapper {
-    margin: 1em 5em 1em 5em;
-    padding-bottom: 10em;
+    margin: 1em 5em -10em 5em;
+    min-height: 100%;
+}
+
+#wrapper:after {
+  content: "";
+  display: block;
+  height: 11em;
 }
 
 .hidden {
@@ -22,19 +28,19 @@ div#index {
 }
 
 ul#contents {
-    -moz-column-width: 10em;
-    -webkit-column-width: 10em;
-    column-width: 10em;
+    -moz-column-width: 8em;
+    -webkit-column-width: 8em;
+    column-width: 8em;
     list-style-type: none;
 }
 
 footer {
     background-color: #336666;
     color: #fef3f3;
+    height: 10em;
     border-top: double #224444; solid;
     margin: 0;
     padding-top: 1em;
-    position: fixed;
     bottom: 0;
 }
 
