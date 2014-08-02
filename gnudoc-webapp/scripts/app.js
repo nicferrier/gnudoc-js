@@ -4,7 +4,7 @@ var clickHistory = [];
 
 $(document).ready(function (){
   if (document.location.pathname.indexOf("/info/") == 0) {
-    docGet(document.location.pathname.split("/info/")[1]);
+    docGet(document.location.pathname);
   }
 });
 
@@ -19,7 +19,10 @@ $(window).on("popstate", function (){
   }
 });
 
-function docGet (target) {
+function docGet (infoTarget) {
+  console.log("docGet: infoTarget = ", infoTarget);
+  var target = infoTarget.split("/info/")[1];
+  console.log("docGet: target = ", target);
   var resource = util.format("/manual/elisp/%s", target);
   $.ajax(resource, {
     dataType: "html",
@@ -56,7 +59,7 @@ function aReplace (selector) {
     var el = $(e);
     var href = el.attr("href");
     el.attr("href", "#");
-    el.attr("ref", href);
+    el.attr("ref", "/info/" + href);
   });
   $(selector).click(function (evt) { return docClick (evt); });
 }
