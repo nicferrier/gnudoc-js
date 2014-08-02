@@ -48,6 +48,10 @@ footer div {
     margin: 1em 7em 1em 7em;
 }
 
+footer div img {
+    float: right;
+}
+
 footer div small {
     display: block;
     font-size: xx-small;
