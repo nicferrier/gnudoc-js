@@ -8,7 +8,7 @@
 # This is the script run on the remote machine
 function remoteDeploy {
     # Pull the new dockers
-    sudo docker.io pull nicferrier/elnode
+    sudo docker.io pull nicferrier/elnode-gnudoc
 
     # What's the current deploy hosted on?
     CURRENTPORT=$(sudo sed -nre 's/.*(801[5-6]).*/\1/p' /etc/nginx/sites-enabled/gnudoc.conf)
