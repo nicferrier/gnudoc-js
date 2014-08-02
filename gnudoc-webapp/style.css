@@ -54,7 +54,7 @@ ul#contents li {
 footer {
     background-color: #336666;
     color: #fef3f3;
-    height: 10em;
+    min-height: 10em;
     border-top: double #224444; solid;
     margin: 0;
     padding-top: 1em;
