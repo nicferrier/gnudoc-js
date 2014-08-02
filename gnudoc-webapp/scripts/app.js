@@ -2,6 +2,27 @@ var util = require("util");
 var $ = require("jquery-browserify");
 var clickHistory = [];
 
+var commands = {
+  top: function () {
+    document.location.href = "/";
+  },
+
+  back: function () {
+    window.history.go(-1);
+  },
+
+  forward: function () {
+    window.history.go(1);
+  }
+};
+
+var keymap = {
+  "<": commands.top,
+  "T": commands.top,
+  "l": commands.back,
+  "f": commands.forward
+};
+
 $(document).ready(function (){
   if (document.location.pathname.indexOf("/info/") == 0) {
     docGet(document.location.pathname);
@@ -64,6 +85,15 @@ function aReplace (selector) {
   $(selector).click(function (evt) { return docClick (evt); });
 }
 
+function keyDispatch (evt) {
+  var keyStr = String.fromCharCode(evt.which);
+  var command = keymap[keyStr];
+  if (typeof(command) == "function") {
+    command();
+    evt.preventDefault();
+  }
+}
+
 $("#index").load(
   "/manual/elisp/index.html #content", 
   function () {
@@ -93,20 +123,7 @@ $("#index").load(
     aReplace("ul#contents li a");
 
     // Some basic "info" mode key handling
-    $("body").keypress(function (evt){
-      console.log("got a keypress! ", String.fromCharCode(evt.which));
-      var keyStr = String.fromCharCode(evt.which);
-      if (keyStr == "<" || keyStr == "T") {
-        // FIXME - not ideal, it reloads
-        document.location.href = "/";
-      }
-      else if (keyStr == "l") {
-        window.history.go(-1); //.pop();
-      }
-      else if (keyStr == "f") {
-        window.history.go(1);
-      }
-    });
+    $("body").keypress(function (evt){ keyDispatch(evt); });
   });
 
 // app.js ends here
