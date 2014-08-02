@@ -37,13 +37,15 @@ function remoteDeploy {
     done | while read dockid port
     do
         # When we get here we should only have the live docker running
-        if [ "$CURRENTPORT" != "$port" ]
+        if [ "$CURRENTPORT" == "$port" ]
         then
-            echo "starting $dockid on $port avoiding nginx on $CURRENTPORT" > /dev/stderr
+            local newport
+            newport=$(expr $port + 1)
+            echo "starting $dockid on $newport avoiding nginx on $CURRENTPORT" > /dev/stderr
             # Start the new docker
-            sudo docker.io run -d -p $port:8015 elnode-gnudoc # we could curl check here
+            sudo docker.io run -d -p $newport:8015 elnode-gnudoc # we could curl check here
             # Rewrite the nginx config
-            sudo sed -ibk -re 's/801[5-6]/8016/' /etc/nginx/sites-enabled/gnudoc.conf
+            sudo sed -ibk -re "s/$port/$newport/" /etc/nginx/sites-enabled/gnudoc.conf
             # Restart nginx
             sudo /etc/init.d/nginx reload
         fi
@@ -58,6 +60,6 @@ sudo docker push nicferrier/elnode-gnudoc
 
 # Now the remote parts
 scp /tmp/gnudocdeploy po5.ferrier.me.uk:/tmp/gnudocdeploy
-ssh po5.ferrier.me.uk bash /tmp/gnudocdeploy
+ssh po5.ferrier.me.uk bash -x /tmp/gnudocdeploy
 
 # deploy ends here
