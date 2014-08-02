@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Simple bash deployment script for gnudoc
+#
+# Rebuilds the current docker, pushes it to the registry and then, on
+# the remote: pulls and tries to start in a blue green way
+
+# This is the script run on the remote machine
+function remoteDeploy {
+    # Pull the new dockers
+    sudo docker.io pull nicferrier/elnode
+
+    # What's the current deploy hosted on?
+    CURRENTPORT=$(sudo sed -nre 's/.*(801[5-6]).*/\1/p' /etc/nginx/sites-enabled/gnudoc.conf)
+
+    # Pull out the IP/port of the dockers that are the correct image
+    sudo docker.io ps -q |  while read dockid
+    do 
+        ( sudo docker.io inspect -f '{{ .Config.Image }}' $dockid \
+            | grep nicferrier/elnode-gnudoc > /dev/null ) && echo $dockid
+    done | while read dockid ;
+    do
+        # It's quite hard to access the keys of NetworkSettings.Ports
+        printf "$dockid " ; sudo docker.io inspect $dockid \
+            | jq -r '.[0] | .NetworkSettings.Ports | to_entries | map(select(.key == "8015/tcp")) | .[0] | .value | .[0] | .HostPort'
+    done | while read dockid port 
+    do
+        # Stop any elnode-gnudoc container that's running on a non-live port
+        if [ "$CURRENTPORT" != "$port" ] 
+        then
+            sudo docker.io kill $dockid
+        fi
+        echo $dockid port
+    done | while read dockid port
+    do
+        # When we get here we should only have the live docker running
+        if [ "$CURRENTPORT" != "$port" ]
+        then
+            # Start the new docker
+            sudo docker.io run -d -p $port:8015 elnode-gnudoc # we could curl check here
+            # Rewrite the nginx config
+            sudo sed -ibk -re 's/801[5-6]/8016/' /etc/nginx/sites-enabled/gnudoc.conf
+            # Restart nginx
+            sudo /etc/init.d/nginx reload
+        fi
+    done
+}
+
+( typeset -fp remoteDeploy ; echo remoteDeploy ) > /tmp/gnudocdeploy
+
+cd $(dirname $0)
+sudo docker build --no-cache -t nicferrier/elnode-gnudoc .
+sudo docker push nicferrier/elnode-gnudoc
+
+# Now the remote parts
+scp /tmp/gnudocdeploy po5.ferrier.me.uk:/tmp/gnudocdeploy
+ssh po5.ferrier.me.uk bash /tmp/gnudocdeploy
+
+# deploy ends here
