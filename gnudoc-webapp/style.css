@@ -9,7 +9,7 @@ html, body {
 }
 
 #wrapper {
-    margin: 1em 5em -10em 5em;
+    margin: 1em 5em -10em 1em;
     min-height: 100%;
 }
 
@@ -32,6 +32,7 @@ h1 {
 }
 
 .doc {
+    margin-left: 5em;
     border-bottom: thin solid;
 }
 
@@ -40,10 +41,14 @@ div#index {
 }
 
 ul#contents {
-    -moz-column-width: 8em;
-    -webkit-column-width: 8em;
-    column-width: 8em;
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
     list-style-type: none;
+}
+
+ul#contents li {
+    padding: 5px;
 }
 
 footer {
