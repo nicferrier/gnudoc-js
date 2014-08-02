@@ -6,11 +6,9 @@ var commands = {
   top: function () {
     document.location.href = "/";
   },
-
   back: function () {
     window.history.go(-1);
   },
-
   forward: function () {
     window.history.go(1);
   }
