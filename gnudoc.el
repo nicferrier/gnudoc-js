@@ -1,4 +1,4 @@
-
+;;; -*- lexical-binding: t -*-
 
 (require 'elnode-proxy)
 (require 'elnode-js)
