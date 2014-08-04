@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "jquery": "2.1.1",
+    "triecomplete": "0.0.1",
     "browserify": ">=4.2.0"
   }
 }
