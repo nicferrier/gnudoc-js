@@ -23,7 +23,21 @@
             (let ((pi (elnode-http-pathinfo httpcon)))
               (string-match "/manual/elisp/\\(.*\\)" pi)
               (match-string 1 pi))))))
-    (elnode-proxy-do httpcon url)))
+    (elnode-proxy-do
+     httpcon url
+     :header-filter
+     (lambda (web-url headers)
+       (let ((far-off
+              (elnode-rfc1123-date
+               (time-add
+                (seconds-to-time (* 60 60 24 5))
+                (current-time))))
+             (expires-hdr (assoc 'expires headers)))
+         (when expires-hdr (setf (cdr expires-hdr) far-off))
+         (-filter (lambda (header-cons)
+                    (unless (eq (car header-cons) 'cache-control)
+                      header-cons))
+                headers))))))
 
 (defun gnudoc-handler (httpcon)
   "Do a sexy js enabled GNU doc."
