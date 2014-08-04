@@ -142,6 +142,7 @@ function docGet (infoTarget) {
         $("#viewer").empty().html(body);
         $("#viewer").removeClass("hidden");
         aReplace("#viewer a");
+        $("#viewer").focus();
       }
     });
   }
