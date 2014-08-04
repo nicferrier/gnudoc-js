@@ -51,7 +51,26 @@ div#indexUi {
     width: 100%;
 }
 
+div#indexCompletions {
+    background: #777777;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+div#indexCompletions ul {
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+div#indexCompletions ul li {
+    padding: 5px;
+}
+
 input#indexTerm {
+    margin-top: 0;
     width: 100%;
 }
 

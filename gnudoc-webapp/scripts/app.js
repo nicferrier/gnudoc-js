@@ -46,7 +46,16 @@ var commands = {
   indexComplete: function (evt) {
     var comps = makeAutoComplete(evt);
     if (comps[comps.length - 1].indexOf(comps[0]) == 0) {
+      $("#indexCompletions").addClass("hidden"); // not sure about this
       $("#indexTerm").val(comps[0]);
+    }
+    else {
+      $("#indexCompletions").removeClass("hidden");
+      $("#indexCompletions ul").html(
+        comps.map(function (e) {
+          return util.format("<li><a href=\"/info/%s\">%s<a/></li>", loadedIndex[e], e);
+        }).join("\n")
+      );
     }
     evt.preventDefault();
   },
