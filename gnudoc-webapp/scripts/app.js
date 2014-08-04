@@ -60,14 +60,12 @@ var commands = {
     evt.preventDefault();
   },
   indexAc: function (evt) {
-    console.log("indexAc called", evt.which);
     var comps = makeAutoComplete(evt);
     if (comps.length == 1) {
       $("#indexTerm").val(comps[0]);
       evt.preventDefault();
       return;
     }
-    console.log(util.format("choose %j", comps));
   },
   indexEscape: keyPreventDefault(function (evt) {
     keymapMode = "normal";
