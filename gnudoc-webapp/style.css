@@ -40,6 +40,21 @@ div#tocHidden {
     display: none;
 }
 
+div#indexHidden {
+    display: none;
+}
+
+div#indexUi {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+input#indexTerm {
+    width: 100%;
+}
+
 ul#contents {
     -moz-column-count: 4;
     -webkit-column-count: 4;
