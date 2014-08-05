@@ -52,14 +52,16 @@ function remoteDeploy {
     done
 }
 
-( typeset -fp remoteDeploy ; echo remoteDeploy ) > /tmp/gnudocdeploy
-
 cd $(dirname $0)
 sudo docker build --no-cache -t nicferrier/elnode-gnudoc .
+
+[ "$1" == "1" ] && exit 1
+
 sudo docker push nicferrier/elnode-gnudoc
 
+[ "$1" == "2" ] && exit 2
+
 # Now the remote parts
-scp /tmp/gnudocdeploy po5.ferrier.me.uk:/tmp/gnudocdeploy
-ssh po5.ferrier.me.uk bash -x /tmp/gnudocdeploy
+( typeset -fp remoteDeploy ; echo remoteDeploy ) | ssh po5.ferrier.me.uk bash -
 
 # deploy ends here
