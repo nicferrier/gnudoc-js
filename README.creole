@@ -23,6 +23,17 @@ Sure!
 Visit: [[http://gnudoc.ferrier.me.uk/]]
 
 
+=== News ===
+
+* //05 Aug 2014//
+** an index lookup system, somewhat like GNU Info's
+*** press //i// to get the index box
+*** press //ESC// to get rid of the index box
+*** press //TAB// while in the index box to try a completion
+*** if there is a completion a selection list will appear
+*** you can click on a selection or simply type more to narrow
+
+
 === the role of elnode ===
 
 Elnode is here because it's easy to make do lots of different
