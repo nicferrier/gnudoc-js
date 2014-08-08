@@ -9,10 +9,16 @@ changes, they are DOM manipulations achieved through AJAX events.
 The app is designed to show how a complex info reader could be made
 with very little control over the HTML.
 
-The HTML here is pulled from the GNU website. It's only the emacs
-manual but that's just to simplify things slightly. Mostly it would
-not be difficult to make an info reader for all GNU documents. It
-would just require a bit of code mapping them together.
+Eventually, perhaps, this could be an info reader in a browser. That
+would be useful. Every smart phone has a good browser. Perhaps your
+Emacs could even open info pages on your phone, as if it was a second
+screen.
+
+The HTML here is proxied from the GNU website. It's only the Emacs
+Lisp manual but that's just to simplify things slightly. Mostly it
+would not be difficult to make an info reader for all GNU
+documents. It would just require a bit of code mapping them
+together. That is now an enhancement suggestion here.
 
 === Can I see it? ===
 
@@ -34,7 +40,7 @@ Visit: [[http://gnudoc.ferrier.me.uk/]]
 *** you can click on a selection or simply type more to narrow
 
 
-=== the role of elnode ===
+=== The role of elnode ===
 
 Elnode is here because it's easy to make do lots of different
 things. In this app it's proxying the GNU website to send Emacs info
