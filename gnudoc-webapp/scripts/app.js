@@ -191,7 +191,7 @@ function keyDispatch (evt) {
 $("#tocHidden").load(
   "/manual/elisp/index.html #content",
   function () {
-    console.log("content is loaded!");
+    console.time("index");
     var docTables = $("#tocHidden table");
     // If we use the tr we could possibly get the 2nd TD, a long description
     var hrefs = $("tr", docTables.get(0)).map(
@@ -210,8 +210,8 @@ $("#tocHidden").load(
         }
       }).get().join("\n")
     );
-
     aReplace("ul#contents li a");
+    console.timeEnd("index");
 
     // Some basic "info" mode key handling
     $("body").keydown(function (evt){ keyDispatch(evt); });
