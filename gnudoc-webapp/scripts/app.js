@@ -217,7 +217,7 @@ $("#tocHidden").load(
     $("body").keydown(function (evt){ keyDispatch(evt); });
   });
 
-// Load the index - in dev right now
+// Load the index
 $("#indexHidden").load(
   "/manual/elisp/Index.html .index-fn",
   function () {
