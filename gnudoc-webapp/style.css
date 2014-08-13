@@ -108,6 +108,7 @@ footer {
     margin: 0;
     padding-top: 1em;
     bottom: 0;
+    overflow: hidden;
 }
 
 footer div {
