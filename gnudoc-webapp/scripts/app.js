@@ -5,6 +5,7 @@ var Ac = require("triecomplete");
 
 var loadedIndex = {}; // Stores the GNU manual index
 var keymapMode = "normal"; // could be "normal" or "index"
+var menu = {};
 
 // Return a function that calls fn with the evt it's passed
 // But also evt.preventDefault on that evt
@@ -15,17 +16,20 @@ function keyPreventDefault (fn) {
   };
 }
 
-function makeAutoComplete (evt) {
+function makeAutoComplete (evt, mapStore) {
   var ac = evt.target["ac"];
   if (ac == null) {
-    console.log("making a new ac!");
     ac = new Ac();
     evt.target["ac"] = ac;
-    ac.initialize(Object.keys(loadedIndex));
+    var keys = Object.keys(mapStore);
+    ac.initialize(keys);
   }
-  return ac.search(evt.target.value).map(function (e) { return e.key; });
+  return ac.search(evt.target.value.toLowerCase()).map(function (e) { 
+    return e.key; 
+  });
 }
 
+// Gnu doc command map - like an "interactive" namespace
 var commands = {
   top: keyPreventDefault(function () {
     document.location.href = "/";
@@ -44,7 +48,7 @@ var commands = {
   indexBackspace: function () {
   },
   indexComplete: function (evt) {
-    var comps = makeAutoComplete(evt);
+    var comps = makeAutoComplete(evt, loadedIndex);
     if (comps[comps.length - 1].indexOf(comps[0]) == 0) {
       $("#indexCompletions").addClass("hidden"); // not sure about this
       $("#indexTerm").val(comps[0]);
@@ -60,7 +64,7 @@ var commands = {
     evt.preventDefault();
   },
   indexAc: function (evt) {
-    var comps = makeAutoComplete(evt);
+    var comps = makeAutoComplete(evt, loadedIndex);
     if (comps.length == 1) {
       $("#indexTerm").val(comps[0]);
       evt.preventDefault();
@@ -77,19 +81,73 @@ var commands = {
     var target = loadedIndex[term];
     history.pushState({}, "", target);
     docGet("/info/" + target);
+  },
+  menu: keyPreventDefault(function (evt) {
+    menu = {}; // erase the keys from whatever menu we have
+    $(".menu a").map(function (i, e) { 
+      menu[e.text.toLowerCase()] = e.getAttribute("href");
+    });
+
+    keymapMode = "menu";
+    $("#menuUi").toggleClass("hidden");
+    $("#menuTerm").removeAttr("disabled");
+    $("#menuTerm").focus();
+  }),
+  menuAc: function (evt) {
+    var comps = makeAutoComplete(evt, menu);
+    if (comps.length == 1) {
+      $("#menuTerm").val(comps[0]);
+      evt.preventDefault();
+      return;
+    }
+  },
+  menuEscape: keyPreventDefault(function (evt) {
+    keymapMode = "normal";
+    $("#menuUi").addClass("hidden");
+  }),
+  menuBackspace: function () {
+  },
+  menuComplete: function (evt) {
+    var comps = makeAutoComplete(evt, menu);
+    console.log("menuComplete comps", comps, menu);
+    if (comps[comps.length - 1].indexOf(comps[0]) == 0) {
+      $("#menuCompletions").addClass("hidden"); // not sure about this
+      $("#menuTerm").val(comps[0]);
+    }
+    else {
+      $("#menuCompletions").removeClass("hidden");
+      $("#menuCompletions ul").html(
+        comps.map(function (e) {
+          return util.format("<li><a href=\"/info/%s\">%s<a/></li>", menu[e], e);
+        }).join("\n")
+      );
+    }
+    evt.preventDefault();
+  },
+  menuLookup: function (evt) {
+    var term = $("#menuTerm").val();
+    commands.menuEscape(evt);
+    var target = menu[term];
+    history.pushState({}, "", target);
+    docGet(target);
   }
 };
 
+// Gnu doc keymap - nowhere near as powerful as Emacs.
 var keymap = {
   "normal": {
     "<": commands.top,
     "T": commands.top,
     "L": commands.back,
     "F": commands.forward,
-    "I": commands.index
+    "I": commands.index,
+    "M": commands.menu
   },
   "index": {
     "DEFAULT": commands.indexAc
+  },
+  "menu": {
+    "DEFAULT": commands.menuAc
   }
 };
 // Some of the keymap commands have to be specified as puts
@@ -97,6 +155,10 @@ keymap["index"][String.fromCharCode(27)] = commands.indexEscape;
 keymap["index"][String.fromCharCode(13)] = commands.indexLookup;
 keymap["index"][String.fromCharCode(8)] = commands.indexBackspace;
 keymap["index"][String.fromCharCode(9)] = commands.indexComplete;
+keymap["menu"][String.fromCharCode(27)] = commands.menuEscape;
+keymap["menu"][String.fromCharCode(13)] = commands.menuLookup;
+keymap["menu"][String.fromCharCode(8)] = commands.menuBackspace;
+keymap["menu"][String.fromCharCode(9)] = commands.menuComplete;
 
 
 $(document).ready(function (){

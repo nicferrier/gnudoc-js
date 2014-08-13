@@ -70,9 +70,24 @@ div#indexCompletions ul li {
 }
 
 input#indexTerm {
+    text-align: right;
     margin-top: 0;
     width: 100%;
 }
+
+div#menuUi {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+input#menuTerm {
+    text-align: right;
+    margin-top: 0;
+    width: 100%;
+}
+
 
 ul#contents {
     -moz-column-count: 4;
