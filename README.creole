@@ -31,6 +31,13 @@ Visit: [[http://gnudoc.ferrier.me.uk/]]
 
 === News ===
 
+* //13 Aug 2014//
+** added a menu command
+*** press //m// to get a menu completion
+*** complete with the //TAB// key
+*** press //ESC// to get rid of the box
+*** this is a pre-requisite to multiple manuals I think
+
 * //05 Aug 2014//
 ** an index lookup system, somewhat like GNU Info's
 *** press //i// to get the index box
