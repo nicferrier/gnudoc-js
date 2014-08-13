@@ -15,6 +15,9 @@
   "Just send the main app page."
   (elnode-send-file httpcon (expand-file-name "index.html" gnudoc/docroot)))
 
+;; this is the emacs manual url
+;; "http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html"
+
 (defun gnudoc-prox (httpcon)
   (let ((url
          (format
