@@ -1,3 +1,5 @@
+// A GNU info browser in JS
+
 var util = require("util");
 var $ = require("jquery"); window.$ = $; // useful debugging
 //var ac = require("jquery-ui/autocomplete");
