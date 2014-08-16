@@ -39,11 +39,15 @@ function remoteDeploy {
         # When we get here we should only have the live docker running
         if [ "$CURRENTPORT" == "$port" ]
         then
-            local newport
-            newport=$(expr $port + 1)
+            local newport=$(expr $port + 1) 
+            local ETAG=$(date '+%Y%m%d%H%M%S%N')
             echo "starting $dockid on $newport avoiding nginx on $CURRENTPORT" > /dev/stderr
             # Start the new docker
-            sudo docker.io run -d -p $newport:8015 -t nicferrier/elnode-gnudoc # we could curl check here
+            sudo docker.io run \
+                -d -p $newport:8015 \
+                --env ETAG=${ETAG} \
+                -t nicferrier/elnode-gnudoc 
+            # ... we could curl check after this
             # Rewrite the nginx config
             sudo sed -ibk -re "s/$port/$newport/" /etc/nginx/sites-enabled/gnudoc.conf
             # Restart nginx
