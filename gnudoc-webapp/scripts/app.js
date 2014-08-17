@@ -207,6 +207,7 @@ function docGet (infoTarget) {
         $("#viewer").removeClass("hidden");
         aReplace("#viewer a");
         $("#viewer").focus();
+        $("div.node", $("#body",$("#viewer")[0]))[0].scrollIntoView();
       }
     });
   }
