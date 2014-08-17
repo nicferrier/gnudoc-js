@@ -63,7 +63,7 @@
    httpcon
    `(("^[^/]+//manual/.*" . gnudoc-prox)
      ("^[^/]+//info/.*" . gnudoc-info)
-     ("^[^.]+//.*" . gnudoc-ws))))
+     ("^[^/]+//.*" . gnudoc-ws))))
 
 (elnode-start
  'gnudoc-handler
