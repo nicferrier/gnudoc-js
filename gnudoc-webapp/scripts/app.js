@@ -169,26 +169,28 @@ $(document).ready(function (){
   }
 });
 
-$(window).on("popstate", function (){
+$(window).on("popstate", function (evt) {
+  var poppedState = history.state;
   var target = document.location.pathname;
   if (target == "/") {
     $("#viewer").addClass("hidden");
     $("#contents").removeClass("hidden");
   }
   else {
-    docGet (target);
+    docGet(target);
+  }
+  if (poppedState) {
+    $(window).scrollTop(poppedState.pos);
   }
 });
 
 function docGet (infoTarget) {
-  console.log("docGet: infoTarget = ", infoTarget);
   var target = infoTarget.split("/info/")[1] || "/";
   if (target == "/") {
     $("#viewer").addClass("hidden");
     $("#contents").removeClass("hidden");
   }
   else {
-    console.log("docGet: target = ", target);
     var resource = util.format("/manual/elisp/%s", target);
     $.ajax(resource, {
       dataType: "html",
@@ -207,16 +209,28 @@ function docGet (infoTarget) {
         $("#viewer").removeClass("hidden");
         aReplace("#viewer a");
         $("#viewer").focus();
-        $("div.node", document.getElementById("body"))[0].scrollIntoView();
       }
     });
   }
 }
 
-function docClick (evt) {
-  var target = $(evt.target).attr("href").split(" ");
+function pushState (target) {
+  history.replaceState(
+    { pos: $(window).scrollTop() }, 
+    "", 
+    document.location.toString()
+  );
   history.pushState({}, "", target);
   docGet(target[0]);
+
+  console.log("scroll into view", document.getElementById("body"));
+  $("div.node", document.getElementById("body"))[0].scrollIntoView();
+}
+
+
+function docClick (evt) {
+  var target = $(evt.target).attr("href").split(" ");
+  pushState(target);
   return false;
 }
 
